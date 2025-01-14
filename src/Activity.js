@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 
 const images = [
     { id: 1, src: 'https://www.foodiesfeed.com/wp-content/uploads/2023/06/burger-with-melted-cheese.jpg', alt: 'Bild 1' },
@@ -10,13 +9,24 @@ const images = [
     { id: 5, src: 'https://img.chefkoch-cdn.de/rezepte/1205621226313744/bilder/1508311/crop-960x720/amerikanische-pancakes.jpg', alt: 'Bild 5' },
 ];
 
-
 export default function ActivityPage() {
     const [selectedImage, setSelectedImage] = useState(null);
     const navigate = useNavigate();
 
     const handleImageClick = (id) => {
         setSelectedImage(id);
+
+        // Klick-Trailing mit der Netlify Funktion
+        fetch('/.netlify/functions/trackClick', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                element: `Bild ${id}`,
+                timestamp: new Date().toISOString(),
+            }),
+        });
     };
 
     const handleConfirm = () => {
@@ -29,9 +39,9 @@ export default function ActivityPage() {
     };
 
     return (
-        <div style={{padding: '20px', textAlign: 'center'}}>
+        <div style={{ padding: '20px', textAlign: 'center' }}>
             <h1>Wo rauf hast du Lust ^^</h1>
-            <div style={{display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '10px'}}>
+            <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '10px' }}>
                 {images.map((image) => (
                     <img
                         key={image.id}
@@ -48,7 +58,8 @@ export default function ActivityPage() {
                     />
                 ))}
             </div>
-            <button className="YesButton"
+            <button
+                className="YesButton"
                 onClick={handleConfirm}
                 style={{
                     marginTop: '20px',

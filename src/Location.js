@@ -10,7 +10,7 @@ export default function LocationPage() {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <div>
                 <h1>Wann möchtest du dich am 14.02. treffen?</h1>
-                <MobileTimePicker defaultValue={dayjs('2022-04-17T15:30')}/>
+                <MobileTimePicker defaultValue={dayjs('2025-04-17T15:30')}/>
             </div>
             <div className="buttons-container">
                 <Link to="/Activity">
