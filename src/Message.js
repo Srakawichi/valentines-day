@@ -12,6 +12,17 @@ export default function MessagePage() {
         if (message.trim() === '') {
             console.log('Keine Nachricht eingegeben.');
         } else {
+            // Nachricht an die Netlify Funktion senden
+            fetch('/.netlify/functions/trackClick', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    element: `Nachricht: ${message}`,
+                    timestamp: new Date().toISOString(),
+                }),
+            });
             console.log(`Nachricht: ${message}`);
             setMessage(''); // Textfeld zurücksetzen
         }
@@ -47,7 +58,6 @@ export default function MessagePage() {
                     Absenden
                 </button>
             </Link>
-
         </div>
     );
 }
