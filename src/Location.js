@@ -18,7 +18,7 @@ export default function LocationPage() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                element: 'Uhrzeit',
+                element: `Uhrzeit: ${formattedTime}`,
                 timestamp: new Date().toISOString(),
                 time: formattedTime,
             }),
